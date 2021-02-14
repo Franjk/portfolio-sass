@@ -1,0 +1,88 @@
+// Partials
+// para modularizar, empiezan con _
+@import './resets';
+@import './variables';
+
+// Functions
+@function weight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+  // se callea: weight(bold);
+  // shoud be used to compute and return values
+}
+
+// Mixins
+// Son similares a las funciones
+@mixin flexCenter($direction) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+  // should be used to apply styles
+}
+
+@mixin theme($light-theme: true) {
+  @if $light-theme {
+    background: lighten($color: $primary-color, $amount: 100%);
+    color: darken($text-color, 100%);
+  }
+}
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+body {
+  background: $primary-color;
+  color: $text-color;
+}
+
+// Nesting
+// Not overuse, using clases is better than nestig
+.main {
+  // usando el mixin
+  @include flexCenter(row);
+  width: 80%;
+  margin: 0 auto;
+
+  // ej 1
+  p {
+    // font-weight: map-get($font-weights, bold);
+  }
+
+  // ej 2
+  &__paragraph1 {
+    font-weight: map-get($font-weights, bold);
+  }
+
+  // ej3
+  #{&}__paragraph1 {
+    font-weight: weight(bold);
+
+    &:hover {
+      color: pink;
+    }
+  }
+
+  // Extend
+  #{&}__paragraph2 {
+    @extend .main__paragraph1;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+
+  // Include mixin
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.light {
+  @include theme($light-theme: true);
+}
+
+// math operations
+// you can use them but all variables must be of the same type

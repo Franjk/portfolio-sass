@@ -1,0 +1,9 @@
+2 syntaxes
+
+SCSS
+SASS CSS
+All valid CSS is valid SCSS
+Easier and most popular
+
+Indented syntax
+Igual que lo anterior pero usa identacion en lugar de corcheates
